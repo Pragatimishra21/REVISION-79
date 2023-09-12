@@ -1,0 +1,59 @@
+class Solution {
+public:
+   bool isLeaf(Node *root)
+   {
+       return !root->left && !root->right;
+   }
+   
+   void left(Node *root , vector<int> &res)
+   {
+      Node *temp = root->left;
+      while(temp!=NULL)
+      {
+          if(!isLeaf(temp)) res.push_back(temp->data);
+          if(temp->left) temp = temp->left;
+          else
+          temp = temp->right;
+      }
+   }
+   
+   void leaves(Node *root , vector<int> &res)
+   {
+       if(isLeaf(root)) res.push_back(root->data);
+       
+       if(root->left) leaves(root->left,res);
+       if(root->right) leaves(root->right , res);
+   }
+   
+   
+   void right(Node *root , vector<int> &res)
+   {
+       vector<int> ans;
+       Node *temp = root->right;
+       while(temp!=NULL)
+       {
+          if(!isLeaf(temp)) ans.push_back(temp->data);
+          if(temp->right) temp = temp->right;
+          else temp = temp->left;
+       }
+       
+       int n = ans.size();
+       for(int i=n-1 ; i>=0 ; i--)
+       {
+           res.push_back(ans[i]);
+       }
+   }
+    vector <int> boundary(Node *root)
+    {
+        //Your code here
+        vector<int> res;
+        if(!root) return res;
+        
+        if(!isLeaf(root)) res.push_back(root->data);
+        
+        left(root,res);
+        leaves(root,res);
+        right(root,res);
+        
+        return res;
+    }
