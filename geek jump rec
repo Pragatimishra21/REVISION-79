@@ -1,0 +1,17 @@
+ public:
+    int recursive(vector<int>& height, int ind)
+    {
+        if(ind==0) return 0;
+        
+        int two = INT_MAX;
+        int one = recursive(height,ind-1)+abs(height[ind]-height[ind-1]);
+        
+        if(ind>1)
+        two = recursive(height,ind-2)+abs(height[ind]-height[ind-2]);
+        
+        return min(one,two);
+    }
+    int minimumEnergy(vector<int>& height, int n) {
+        // Code here
+       return recursive(height,n-1);
+    }
